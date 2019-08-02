@@ -22,6 +22,7 @@ $(document).ready(function () {
             queryCardTitle.text(favArray[i].title);
             var unFavButton = $("<a class='unFavButton btn-floating halfway-fab waves-effect waves-light red'>");
             unFavButton.html("<i class ='fas fa-heart fa-lg' ></i>");
+            unFavButton.attr("data-imageURL", favArray[i].url);
 
             var queryCardContent = $("<div class='card-content'>");
 
@@ -141,12 +142,13 @@ $(document).ready(function () {
         $(this).removeClass("red unFavButton");
         $(this).addClass("blue lighten-3 favButton");
         var url = $(this).attr("data-imageURL");
+        console.log(url);
 
         // userFavorites already contains one or more GIFs
         if (localStorage.getItem("userFavorites")) {
             var favArray = JSON.parse(localStorage.getItem("userFavorites"));
+            console.log(favArray, url)
             var objIdx = favArray.findIndex(o => o.url === url);
-            console.log(objIdx);
             (objIdx !== -1) ? favArray.splice(objIdx, 1): '';
 
             localStorage.setItem("userFavorites", JSON.stringify(favArray));
