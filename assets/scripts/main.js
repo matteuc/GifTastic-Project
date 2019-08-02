@@ -63,6 +63,7 @@ $(document).ready(function () {
 
     $("#search").keypress(function (e) {
         // If enter key is pressed, search for GIF
+        $("#searchResults").text(e.which);
         if (e.which == 13) {
             var queryURL = `https://api.giphy.com/v1/gifs/search?q=${$("#search").val()}&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10`;
             // Perfoming an AJAX GET request to our queryURL
