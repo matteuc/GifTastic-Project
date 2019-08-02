@@ -1,12 +1,12 @@
 $(document).ready(function () {
+    var favArray;
     (localStorage.getItem("userFavorites")) ? renderFavorites(): '';
 
     function renderFavorites() {
         $("#favorites").empty();
 
         // console.log(localStorage.getItem("userFavorites"));
-        var favArray = JSON.parse(localStorage.getItem("userFavorites"));
-
+        favArray = JSON.parse(localStorage.getItem("userFavorites"));
 
         // Looping through each saved favorite GIF
         for (var i = 0; i < favArray.length; i++) {
@@ -49,6 +49,14 @@ $(document).ready(function () {
 
     }
 
+    function unFavAllInstances(url) {
+        // Remove/Add classes for all GIF results that are identical
+        $("i", `a[data-imageURL= "${url}"]`).removeClass("fas");
+        $("i", `a[data-imageURL= "${url}"]`).addClass("far");
+        $(`a[data-imageURL= "${url}"]`).removeClass("red unFavButton");
+        $(`a[data-imageURL= "${url}"]`).addClass("blue lighten-3 favButton");
+    }
+
     $("#clearResults").click(function () {
         $("#searchResults").empty();
     })
@@ -81,8 +89,18 @@ $(document).ready(function () {
 
                         var queryCardTitle = $("<span class='card-title'>");
                         queryCardTitle.text(results[i].title);
-                        var favButton = $("<a class='favButton btn-floating halfway-fab waves-effect waves-light blue lighten-3'>");
-                        favButton.html("<i class ='far fa-heart fa-lg' ></i>");
+
+                        var objIdx = favArray.findIndex(o => o.url === results[i].images.fixed_height.url);
+                        var favButton;
+
+                        if (objIdx === -1) {
+                            favButton = $("<a class='favButton btn-floating halfway-fab waves-effect waves-light blue lighten-3'>");
+                            favButton.html("<i class ='far fa-heart fa-lg' ></i>");
+                        } else {
+                            favButton = $("<a class='unFavButton btn-floating halfway-fab waves-effect waves-light red lighten-1'>");
+                            favButton.html("<i class ='fas fa-heart fa-lg' ></i>");
+                        }
+
                         favButton.attr("data-imageURL", results[i].images.fixed_height.url);
                         favButton.attr("data-title", results[i].title);
                         favButton.attr("data-rating", results[i].rating);
@@ -102,13 +120,13 @@ $(document).ready(function () {
                         // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                         $("#searchResults").prepend(queryParentDiv);
                     }
+
+
                 });
 
 
         }
     })
-
-
 
     $(document).on("click", ".favButton", function () {
         // localStorage.clear();
@@ -125,8 +143,8 @@ $(document).ready(function () {
             title: title
         };
         // userFavorites already contains one or more GIFs
-        if (localStorage.getItem("userFavorites")) {
-            var favArray = JSON.parse(localStorage.getItem("userFavorites"));
+        if (favArray) {
+            // var favArray = JSON.parse(localStorage.getItem("userFavorites"));
             favArray.push(favObj);
             localStorage.setItem("userFavorites", JSON.stringify(favArray));
 
@@ -144,21 +162,10 @@ $(document).ready(function () {
 
         var url = $(this).attr("data-imageURL");
 
-        // Remove/Add classes for all GIF results that are identical
-        $("i", `a[data-imageURL= "${url}"]`).removeClass("fas");
-        $("i", `a[data-imageURL= "${url}"]`).addClass("far");
-        $(`a[data-imageURL= "${url}"]`).removeClass("red unFavButton");
-        $(`a[data-imageURL= "${url}"]`).addClass("blue lighten-3 favButton");
-
-        // $("i", this).removeClass("fas");
-        // $("i", this).addClass("far");
-        // $(this).removeClass("red unFavButton");
-        // $(this).addClass("blue lighten-3 favButton");
+        unFavAllInstances(url);
 
         // userFavorites already contains one or more GIFs
         if (localStorage.getItem("userFavorites")) {
-            var favArray = JSON.parse(localStorage.getItem("userFavorites"));
-            console.log(favArray, url)
             var objIdx = favArray.findIndex(o => o.url === url);
             (objIdx !== -1) ? favArray.splice(objIdx, 1): '';
 
