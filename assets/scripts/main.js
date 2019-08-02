@@ -41,6 +41,14 @@ $(document).ready(function () {
         }
     }
 
+    function favAllInstances(url) {
+        $("i", `a[data-imageURL= "${url}"]`).removeClass("far");
+        $("i", `a[data-imageURL= "${url}"]`).addClass("fas");
+        $(`a[data-imageURL= "${url}"]`).removeClass("blue lighten-3 favButton");
+        $(`a[data-imageURL= "${url}"]`).addClass("red unFavButton");
+
+    }
+
     $("#clearResults").click(function () {
         $("#searchResults").empty();
     })
@@ -100,22 +108,19 @@ $(document).ready(function () {
         }
     })
 
+
+
     $(document).on("click", ".favButton", function () {
         // localStorage.clear();
+        var url = $(this).attr("data-imageURL");
 
-        $("i", this).removeClass("far");
-        $("i", this).addClass("fas");
-        $(this).removeClass("blue lighten-3 favButton");
-        $(this).addClass("red unFavButton");
+        favAllInstances(url)
 
-
-
-        var gifURL = $(this).attr("data-imageURL");
         var rating = $(this).attr("data-rating");
         var title = $(this).attr("data-title");
 
         var favObj = {
-            url: gifURL,
+            url: url,
             rating: rating,
             title: title
         };
@@ -137,12 +142,18 @@ $(document).ready(function () {
     $(document).on("click", ".unFavButton", function () {
         // localStorage.clear();
 
-        $("i", this).removeClass("fas");
-        $("i", this).addClass("far");
-        $(this).removeClass("red unFavButton");
-        $(this).addClass("blue lighten-3 favButton");
         var url = $(this).attr("data-imageURL");
-        console.log(url);
+
+        // Remove/Add classes for all GIF results that are identical
+        $("i", `a[data-imageURL= "${url}"]`).removeClass("fas");
+        $("i", `a[data-imageURL= "${url}"]`).addClass("far");
+        $(`a[data-imageURL= "${url}"]`).removeClass("red unFavButton");
+        $(`a[data-imageURL= "${url}"]`).addClass("blue lighten-3 favButton");
+
+        // $("i", this).removeClass("fas");
+        // $("i", this).addClass("far");
+        // $(this).removeClass("red unFavButton");
+        // $(this).addClass("blue lighten-3 favButton");
 
         // userFavorites already contains one or more GIFs
         if (localStorage.getItem("userFavorites")) {

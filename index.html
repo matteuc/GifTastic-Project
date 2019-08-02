@@ -18,7 +18,7 @@
 <body>
     <nav class="nav-extended">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">GifTastic</a>
+            <a href="#" class="brand-logo" style="margin-left:10px">GifTastic</a>
         </div>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
@@ -34,7 +34,10 @@
         </div>
     </nav>
 
-    <div id="searchDiv" class="nav-wrapper row valign-wrapper">
+    <div id="searchDiv" class="nav-wrapper row valign-wrapper" style="display: block">
+        <a id="clearResults" class="red lighten-1 btn col s10 offset-s1" style="margin-top:10px">
+            <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Clear
+            Results</a>
         <form class="col s12">
             <div class="input-field">
                 <input placeholder="Search for GIFs!" id="search" type="search">
@@ -42,9 +45,7 @@
                 <i class="material-icons">close</i>
             </div>
         </form>
-        <a id="clearResults" class="red lighten-1
- btn col s10 offset-s1"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Clear
-            Results</a>
+
 
         <div id="searchResults" class="col s12"></div>
 
