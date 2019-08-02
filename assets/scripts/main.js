@@ -92,7 +92,11 @@ $(document).ready(function () {
                         var queryCardTitle = $("<span class='card-title'>");
                         queryCardTitle.text(results[i].title);
 
-                        var objIdx = favArray.findIndex(o => o.url === results[i].images.fixed_height.url);
+                        var objIdx = -1;
+                        if (favArray) {
+                            objIdx = favArray.findIndex(o => o.url === results[i].images.fixed_height.url);
+                        }
+
                         var favButton;
 
                         if (objIdx === -1) {
