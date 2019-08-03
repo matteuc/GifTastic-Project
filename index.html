@@ -34,14 +34,18 @@
     </nav>
 
     <div id="searchDiv" class="nav-wrapper row valign-wrapper" style="display: block">
+        <div id="savedButtons" class="col s12" style="margin-top:5px"></div>
 
-        <form class="col s12">
+        <form class="col s11">
             <div class="input-field">
                 <input placeholder="Search for GIFs!" id="search" type="search">
                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                 <i class="material-icons">close</i>
             </div>
         </form>
+        <a class="btn-floating pulse" id="addButton" title="Make your search a button!" style="margin-top: 8px;"><i
+                class="material-icons">add</i></a>
+
         <a title="Clear Results" id="clearResults" class="red lighten-1 btn col s10 offset-s1" style="margin-top:5px">
             <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Clear
             Results</a>
